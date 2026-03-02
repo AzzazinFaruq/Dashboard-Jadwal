@@ -1,7 +1,23 @@
 package main
 
-import "fmt"
+import (
+	// "context"
+
+	"backend/config"
+	"backend/database"
+	// "backend/models"
+	"backend/routes"
+
+	"github.com/gofiber/fiber/v2"
+)
 
 func main() {
-	fmt.Println("Hello, World!")
+	config.Load()
+	database.Connect()
+	database.Migrate()
+
+	app := fiber.New()
+	routes.Setup(app, database.DB)
+
+	app.Listen(":" + config.Get("APP_PORT"))
 }
