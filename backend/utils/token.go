@@ -19,10 +19,10 @@ func getJWTSecret() []byte {
 }
 
 // GenerateJWT membuat token baru untuk user
-func GenerateJWT(userID uint) (string, error) {
-	// Untuk aplikasi klinik, kita bisa menambahkan role jika diperlukan
+func GenerateJWT(userID int64, role string) (string, error) {
 	claims := jwt.MapClaims{
 		"sub": userID,
+		"role": role,
 		"exp": time.Now().Add(time.Hour * 24).Unix(), // Token berlaku 24 jam
 		"iat": time.Now().Unix(),
 	}
